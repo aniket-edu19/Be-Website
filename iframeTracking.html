@@ -1,0 +1,58 @@
+<html lang="en">
+
+<head>
+    <!-- Google Tag Manager -->
+    <script>(function (w, d, s, l, i) {
+            w[l] = w[l] || []; w[l].push({
+                'gtm.start':
+                    new Date().getTime(), event: 'gtm.js'
+            }); var f = d.getElementsByTagName(s)[0],
+                j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : ''; j.async = true; j.src =
+                    'https://www.googletagmanager.com/gtm.js?id=' + i + dl; f.parentNode.insertBefore(j, f);
+        })(window, document, 'script', 'dataLayer', 'GTM-TBZGWST');</script>
+    <!-- End Google Tag Manager -->
+
+    <iframe src="https://bewebsite-3ec2a.web.app/" width="100%" height="600" style="border:1px solid black;">
+
+    </iframe>
+
+    <script>
+        //recieving data from child
+        window.addEventListener('message', receiveMessage, false);
+        console.log("window of iframe load");
+        function receiveMessage(evt) {
+            if (evt.data && typeof (evt.data) == 'string' ? JSON.parse(evt.data).event.match(/more_iframe/) : evt.data.event.match(/more_iframe/)) {
+                var evt_data = typeof (evt.data) == 'string' ? JSON.parse(evt.data) : evt.data;
+                dataLayer.push(evt_data)
+            }
+        }
+    </script>
+
+    <script>
+
+        const iframeElement = document.querySelector("iframe");
+
+
+        setTimeout(function () {
+            // Your code here
+            console.log("Sending data from parent to child");
+            //sending data to child
+            iframeElement.contentWindow.postMessage({
+                'event': 'send_url',
+                'url': window.location.href,
+                'eventLabel': 'Aniket_url_event',
+            }, '*');
+
+            iframeElement.contentWindow.postMessage({
+                'event': 'send_url2',
+                'url': "URL2",
+                'eventLabel': 'Aniket_url_event',
+            }, '*');
+        }, 1000);
+
+    
+
+    </script>
+</head>
+
+</html>
